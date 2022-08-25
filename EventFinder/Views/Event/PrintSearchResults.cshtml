@@ -1,0 +1,21 @@
+﻿@model List<Info>
+@{
+    int eventCounter = 0;
+
+}
+@foreach(var info in Model)
+{
+        <div class="container">
+        @{ eventCounter++;}
+        <h2>Event @eventCounter</h2>
+        <p>Event time: @info.EventTime</p>
+        <p>Event date: @info.EventDate</p>
+        <p>Event name: @info.EventName</p>
+        </div>
+}
+
+@if(eventCounter == 0)
+            {
+                <h2>Sorry :(</h2>
+                <h2>No events match this criteria</h2>
+            }

@@ -2,8 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    @using (Html.BeginForm("PrintSearchResults", "Event", "Post"))
+    {
+        <label class="control-label">When will you be visiting? (Enter using YYYY-MM-DD format)</label>
+        <input type="text" name="startDate" class="form-control" required />
+
+        <label class="control-label">When will you be leaving? (Enter using YYYY-MM-DD format)</label>
+        <input type="text" name="endDate" class="form-control" required />
+
+        <label class="control-label">What city will you be visiting?</label>
+        <input type="text" name="city" class="form-control" required />
+
+        <label class="control-label">What is the soonest time you will be available for the event? (Use HH:MM_M format, where 'HH' is the hour, 'MM' is the minutes, and '_M' is either AM or PM.)</label>
+        <input type="text" name="startTime" class="form-control" required />
+
+        <label class="control-label">What is the latest time you can attend event? (Use HH:MM_M format, where 'HH' is the hour, 'MM' is the minutes, and '_M' is either AM or PM.)</label>
+        <input type="text" name="endTime" class="form-control" required />
+
+        <label class="control-label">What type of event are you interested in attending? Sports, Music, or Miscellaneous</label>
+        <input type="text" name="eventType" class="form-control" required />
+
+        <label class="control-label">Which genre?</label>
+        <input type="text" name="genre" class="form-control" required />
+
+        <input type="submit" value="Search" class="btn btn-primary" />
+    }
 </div>
 
