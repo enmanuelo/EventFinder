@@ -17,197 +17,147 @@ namespace EventFinder.Controllers
             return View();
         }
         public IActionResult PrintSearchResults(string startDate, string endDate, string city, string startTime, string endTime, string eventType, string genre)
-        {            
-            /* Ask client for date of arrival */
-            var valid = false;
-            //do
+        {                        
+            bool isValid = true;
+                        
+            /* Check for valid for time of arrival */
+            string startHour;                        
+            startHour = startTime.Substring(0, 2);
+            bool isStartHour = int.TryParse(startHour, out int startHourInt);
+            //if (startTime.Substring(5, 2).ToUpper() != "PM" && startTime.Substring(5, 2).ToUpper() == "AM")
             //{
-            //    Console.WriteLine("When will you be visiting? (Enter using YYYY-MM-DD format)");
-
-            //    if (int.Parse(startDate.Substring(0, 4)) < 2022)
-            //    {
-            //        Console.WriteLine("Invalid year! Must pick a future date");
-            //        valid = true;
-            //    }
-            //    else if (int.Parse(startDate.Substring(5, 2)) < 1 || int.Parse(startDate.Substring(5, 2)) > 12)
-            //    {
-            //        Console.WriteLine("Invalid month! Must pick an existing month between 01-12");
-            //        valid = true;
-            //    }
-            //    else if ((int.Parse(startDate.Substring(5, 2)) == 2) && (int.Parse(startDate.Substring(8, 2)) < 1 || int.Parse(startDate.Substring(8, 2)) > 28))
-            //    {
-            //        Console.WriteLine("Invalid day! Must choose between 01-28 for the month of February");
-            //        valid = true;
-            //    }
-            //    else if ((int.Parse(startDate.Substring(5, 2)) == 4 || int.Parse(startDate.Substring(5, 2)) == 6 || int.Parse(startDate.Substring(5, 2)) == 9 || int.Parse(startDate.Substring(5, 2)) == 11) && (int.Parse(startDate.Substring(8, 2)) < 1 || int.Parse(startDate.Substring(8, 2)) > 30))
-            //    {
-            //        Console.WriteLine("Invalid day! Must choose day between 01-30 for this month");
-            //        valid = true;
-
-            //    }
-            //    else if ((int.Parse(startDate.Substring(5, 2)) == 1 || int.Parse(startDate.Substring(5, 2)) == 3 || int.Parse(startDate.Substring(5, 2)) == 5 || int.Parse(startDate.Substring(5, 2)) == 7 || int.Parse(startDate.Substring(5, 2)) == 8 || int.Parse(startDate.Substring(5, 2)) == 10 || int.Parse(startDate.Substring(5, 2)) == 12) && (int.Parse(startDate.Substring(8, 2)) < 1 || int.Parse(startDate.Substring(8, 2)) > 31))
-            //    {
-            //        Console.WriteLine("Invalid day! Must choose day between 01-31 for this month");
-            //        valid = true;
-            //    }
-            //    else if (startDate[4] != '-' || startDate[7] != '-')
-            //    {
-            //        Console.WriteLine("Invalid input! Must use '-' to separate year, month and date. Please check format!");
-            //        valid = true;
-            //    }
-            //    else
-            //    {
-            //        valid = false;
-            //    }
-            //} while (valid == true);
-
-
-            /* Ask client for date of departure */
-            valid = false;
-            //do
-            //{
-
-            //    if (int.Parse(endDate.Substring(0, 4)) < 2022)
-            //    {
-            //        Console.WriteLine("Invalid year! Must pick a future date");
-            //        valid = true;
-            //    }
-            //    else if (int.Parse(endDate.Substring(5, 2)) < 1 || int.Parse(endDate.Substring(5, 2)) > 12)
-            //    {
-            //        Console.WriteLine("Invalid month! Must pick an existing month between 01-12");
-            //        valid = true;
-            //    }
-            //    else if ((int.Parse(endDate.Substring(5, 2)) == 2) && (int.Parse(endDate.Substring(8, 2)) < 1 || int.Parse(endDate.Substring(8, 2)) > 28))
-            //    {
-            //        Console.WriteLine("Invalid day! Must choose between 01-28 for the month of February");
-            //        valid = true;
-            //    }
-            //    else if ((int.Parse(endDate.Substring(5, 2)) == 4 || int.Parse(endDate.Substring(5, 2)) == 6 || int.Parse(endDate.Substring(5, 2)) == 9 || int.Parse(endDate.Substring(5, 2)) == 11) && (int.Parse(endDate.Substring(8, 2)) < 1 || int.Parse(endDate.Substring(8, 2)) > 30))
-            //    {
-            //        Console.WriteLine("Invalid day! Must choose day between 01-30 for this month");
-            //        valid = true;
-
-            //    }
-            //    else if ((int.Parse(endDate.Substring(5, 2)) == 1 || int.Parse(endDate.Substring(5, 2)) == 3 || int.Parse(endDate.Substring(5, 2)) == 5 || int.Parse(endDate.Substring(5, 2)) == 7 || int.Parse(endDate.Substring(5, 2)) == 8 || int.Parse(endDate.Substring(5, 2)) == 10 || int.Parse(endDate.Substring(5, 2)) == 12) && (int.Parse(endDate.Substring(8, 2)) < 1 || int.Parse(endDate.Substring(8, 2)) > 31))
-            //    {
-            //        Console.WriteLine("Invalid day! Must choose day between 01-31 for this month");
-            //        valid = true;
-            //    }
-            //    else if (endDate[4] != '-' || endDate[7] != '-')
-            //    {
-            //        Console.WriteLine("Invalid input! Must use '-' to separate year, month and date. Please check format!");
-            //        valid = true;
-            //    }
-            //    else
-            //    {
-            //        valid = false;
-            //    }
-            //} while (valid == true);
-
-
-            /* Ask client for time of arrival */
-            string startHour;
-            valid = false;
-            //do
-            //{              
-
-            //    if (int.Parse(startTime.Substring(0, 2)) < 1 || int.Parse(startTime.Substring(0, 2)) > 12)
-            //    {
-            //        Console.WriteLine("Invalid hour! Please choose an hour between 01 and 12.");
-            //        valid = true;
-            //    }
-            //    else if (int.Parse(startTime.Substring(3, 2)) < 0 || int.Parse(startTime.Substring(3, 2)) > 59)
-            //    {
-            //        Console.WriteLine("Invalid minute! Please choose a minute between 00 and 59.");
-            //        valid = true;
-            //    }
-            //    else if (startTime[2] != ':')
-            //    {
-            //        Console.WriteLine("Invalid input! Please use ':' to separate hours and minutes.");
-            //        valid = true;
-            //    }
-            //    else if (startTime.Length <= 5)
-            //    {
-            //        Console.WriteLine("Invalid input! Must indicate whether AM or PM");
-            //        valid = true;
-            //    }
-            //    else if (!(startTime.Substring(5).ToLower().Equals("am") || startTime.Substring(5).ToLower().Equals("pm")))
-            //    {
-            //        Console.WriteLine($"Invalid input! Enter either 'AM' or 'PM' after time. You entered {startTime.Substring(5)}");
-            //        valid = true;
-            //    }
-            //    else
-            //    {
-            //        valid = false;
-            //    }
-            //} while (valid == true);
+            //    isValid = false;
+            //}
             if (startTime.Substring(5, 2).ToUpper() == "PM")
             {
-                startHour = (int.Parse(startTime.Substring(0, 2)) + 12).ToString();
+                startHour = (startHourInt + 12).ToString();
             }
-            else
+            if (!isStartHour || startHourInt < 0 || startHourInt > 24)
             {
-                startHour = startTime.Substring(0, 2);
+                isValid = false;
             }
             var startMinutes = startTime.Substring(3, 2);
+            bool isStartMinutes = int.TryParse(startMinutes, out int startMinuteInt);
+            if (!isStartMinutes || startMinuteInt < 0 || startMinuteInt > 59)
+            {
+                isValid = false;
+            }
             startTime = $"{startHour}:{startMinutes}";
+            
 
-
-            /* Ask client for time of departure */
-            string endHour;
-            valid = false;
-            //do
+            /* Check for valid time of departure */
+            string endHour;                        
+            endHour = endTime.Substring(0, 2);
+            bool isEndHour = int.TryParse(endHour, out int endHourInt);
+            //if (endTime.Substring(5, 2).ToUpper() != "PM" && endTime.Substring(5, 2).ToUpper() == "AM")
             //{
-
-            //    if (int.Parse(endTime.Substring(0, 2)) < 1 || int.Parse(endTime.Substring(0, 2)) > 12)
-            //    {
-            //        Console.WriteLine("Invalid hour! Please choose an hour between 01 and 12.");
-            //        valid = true;
-            //    }
-            //    else if (int.Parse(endTime.Substring(3, 2)) < 0 || int.Parse(endTime.Substring(3, 2)) > 59)
-            //    {
-            //        Console.WriteLine("Invalid minute! Please choose a minute between 00 and 59.");
-            //        valid = true;
-            //    }
-            //    else if (endTime[2] != ':')
-            //    {
-            //        Console.WriteLine("Invalid input! Please use ':' to separate hours and minutes.");
-            //        valid = true;
-            //    }
-            //    else if (endTime.Length <= 5)
-            //    {
-            //        Console.WriteLine("Invalid input! Must indicate whether AM or PM");
-            //        valid = true;
-            //    }
-            //    else if (!(endTime.Substring(5).ToLower().Equals("am") || endTime.Substring(5).ToLower().Equals("pm")))
-            //    {
-            //        Console.WriteLine($"Invalid input! Enter either 'AM' or 'PM' after time. You entered {endTime.Substring(5)}");
-            //        valid = true;
-            //    }
-            //    else
-            //    {
-            //        valid = false;
-            //    }
-            //} while (valid == true);
+            //    isValid = false;
+            //}
             if (endTime.Substring(5, 2).ToUpper() == "PM")
             {
-                endHour = (int.Parse(endTime.Substring(0, 2)) + 12).ToString();
-            }
-            else
+                endHour = (endHourInt + 12).ToString();
+            }           
+            if (!isEndHour || endHourInt < 0 || endHourInt > 24)
             {
-                endHour = endTime.Substring(0, 2);
+                isValid = false;
             }
             var endMinutes = endTime.Substring(3, 2);
+            bool isEndMinutes = int.TryParse(endMinutes, out int endMinuteInt);
+            if (!isEndMinutes || endMinuteInt < 0 || endMinuteInt > 59)
+            {
+                isValid = false;
+            }            
             endTime = $"{endHour}:{endMinutes}";
 
-            /* Grabs api Key */
+
+            /* Check if valid start date */
+            string startYear;
+            startYear = startDate.Substring(0, 4);
+            bool isStartYear = int.TryParse(startYear, out int startYearInt);
+            if (!isStartYear || startYearInt < 2022)
+            {
+                isValid = false;
+            }
+
+            string startMonth;
+            startMonth = startDate.Substring(5, 2);
+            bool isStartMonth = int.TryParse(startMonth, out int startMonthInt);
+            if(!isStartMonth || startMonthInt < 0 || startMonthInt > 12)
+            {
+                isValid = false;
+            }
+
+            string startDay;
+            startDay = startDate.Substring(8, 2);
+            bool isStartDay = int.TryParse(startDay, out int startDayInt);
+            if (!isStartDay || startDayInt < 0 || startDayInt > 31)
+            {
+                isValid = false;
+            }
+
+
+            /* Check if valid end date */
+            string endYear;
+            endYear = endDate.Substring(0, 4);
+            bool isEndYear = int.TryParse(endYear, out int endYearInt);
+            if (!isEndYear || endYearInt < 2022)
+            {
+                isValid = false;
+            }
+
+            string endMonth;
+            endMonth = endDate.Substring(5, 2);
+            bool isEndMonth = int.TryParse(endMonth, out int endMonthInt);
+            if (!isEndMonth || endMonthInt < 0 || endMonthInt > 12)
+            {
+                isValid = false;
+            }
+
+            string endDay;
+            endDay = endDate.Substring(8, 2);
+            bool isEndDay = int.TryParse(endDay, out int endDayInt);
+            if (!isEndDay || endDayInt < 0 || endDayInt > 31)
+            {
+                isValid = false;
+            }
+
+
+            /* Check if correct symbols in date and time */
+            var startDateDash1 = startDate[4];
+            var startDateDash2 = startDate[7];
+            var endDateDash1 = endDate[4];
+            var endDateDash2 = endDate[7];
+            if (startDateDash1 != '-' || startDateDash2 != '-' || endDateDash1 != '-' || endDateDash2 != '-')
+            {
+                isValid = false;
+            }
+            var startTimeColon = startTime[2];
+            var endTimeColon = endTime[2];
+            if (startTimeColon != ':' || endTimeColon != ':')
+            {
+                isValid = false;
+            }
+
+            /* Grab api Key */
             string apiKeys = System.IO.File.ReadAllText("appsettings.json");
             string apiKey = JObject.Parse(apiKeys).GetValue("Key").ToString();
 
-            /* Get search results that match criteria */
+
+            /* Convert user inputs to proper format to pass into url */
             var client = new HttpClient();
             var startDateTime = $"{startDate}T{startTime}:00Z";
             var endDateTime = $"{endDate}T{endTime}:00Z";
+
+
+            /* Check for valid user input. If invalid, set deafult input*/
+            if (isValid == false)
+            {
+                startDateTime = "2022-08-26T00:00:00Z";
+                endDateTime = "2022-08-27T00:00:00Z";
+                genre = "L";
+            }
+
+            /* Get search results that match criteria */
             var eventURL = $"https://app.ticketmaster.com/discovery/v2/events.json?city={city}&startDateTime={startDateTime}&endDateTime={endDateTime}&apikey={apiKey}";
             var response = client.GetStringAsync(eventURL).Result;
             var jsonResponse = JObject.Parse(response);
